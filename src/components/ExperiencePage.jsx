@@ -1,0 +1,379 @@
+import { useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { FaGraduationCap, FaUsers, FaTools, FaTasks, FaBuilding, FaUserTie, FaCheckCircle, FaHandshake, FaArrowLeft, FaBriefcase, FaUniversity } from 'react-icons/fa'
+
+const ExperiencePage = () => {
+  const { id } = useParams()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const experience = location.state?.experience
+  const scrollPosition = location.state?.scrollPosition
+
+  useEffect(() => {
+    // Set scroll to top when component mounts
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
+    if (!experience) {
+      console.log('No experience data found, redirecting to home')
+      navigate('/')
+    }
+  }, [experience, navigate])
+
+  const handleBack = () => {
+    navigate('/', { state: { scrollPosition } })
+  }
+
+  if (!experience) {
+    return null
+  }
+
+  const getIcon = (id) => {
+    switch (id) {
+      case 'uog':
+      case 'fif':
+      case 'lernr':
+        return FaBriefcase
+      case 'buildspace':
+        return FaUniversity
+      default:
+        return FaBriefcase
+    }
+  }
+
+  const Icon = getIcon(id)
+
+  const sections = {
+    'uog': {
+      introduction: "Hey, this was my first work term. As of S24 I was employed at the University of Guelph as a Sharepoint developer and worked under Judi McCuaig. I will now use this opportunity to explain what I had done in this period and other facts about the workplace and the work itself.",
+      
+      employer: {
+        main: "I was hired by the University of Guelph, located in Guelph, Ontario, Canada, it's a renowned public research university known for its dedication to improving life through its comprehensive programs and innovative research. Established in 1964, it has grown into one of Canada's leading institutions, particularly recognized for its programs in veterinary medicine, agriculture, and environmental sciences.",
+        socs: "The University of Guelph's School of Computer Science, established in 1971, is a prominent hub for research and education in various areas of computing science, particularly Artificial Intelligence and Machine Learning. The university offers a range of graduate programs, including a Master of Science in Computer Science and a collaborative specialization in AI, which integrates advanced computational thinking and the societal impacts of AI into the curriculum.",
+        facts: [
+          "The School of Computer Science, specifically the graduate research areas, has 26 faculty members who supervise 37 MSc and 35 PhD students",
+          "The university is known for its vibrant community and beautiful campus, which includes features like the Arboretum and the newly renovated Reynolds Building",
+          "It has one of the top veterinary medicine programs globally, consistently ranked among the best"
+        ]
+      },
+
+      supervisor: {
+        name: "Dr. Judi McCuaig",
+        role: "Associate Professor",
+        background: "PhD from University of Saskatchewan (2000), Former Senior Research Scientist at Pacific Northwest Laboratory",
+        details: [
+          "Dr. Judi McCuaig is an Associate Professor in the School of Computer Science at the University of Guelph. She received her PhD from the University of Saskatchewan in 2000 and subsequently worked as a Senior Research Scientist at Pacific Northwest Laboratory in Richland, Washington, until 2004. She then joined the University of Guelph, where she has been actively involved in research and teaching.",
+          "Dr. McCuaig's research focuses on leveraging computer systems to enhance learner engagement in post-secondary education. Her work includes the use of data mining, intelligent software systems, personalization, and user modeling to develop effective learning tools. Key areas of her research include automated formative feedback and the development of conversational agents to assist students with task decomposition and work planning. Her projects aim to improve self-regulation and independent learning among students.",
+          "Additionally, Dr. McCuaig has been involved in several funded projects aimed at improving educational outcomes. For example, she received funding from the Physical Science & Engineering Education Research Centre (PSEER) to develop a framework for automated task decomposition and work planning, particularly beneficial for neurodiverse learners."
+        ]
+      },
+
+      goals: [
+        "Communicate effectively with co-workers and supervisor",
+        "Learn project management through GitLab",
+        "Improve problem-solving skills",
+        "Manage time effectively",
+        "Develop intercultural competence"
+      ],
+
+      goalAchievements: [
+        "I'm pleased to say that I successfully met all of these goals. For effective communication, I maintained regular contact with my supervisor through Microsoft Teams, providing daily updates and seeking clarification when needed. I also collaborated closely with my co-workers, often discussing our approach to tasks in person.",
+        "In terms of technological literacy, I significantly improved my skills with GitLab. Our team opened an average of 26.8 issues and closed 21.8, demonstrating my ability to create, manage, and resolve tickets effectively.",
+        "For problem-solving, my co-worker and I developed several planning documents, breaking down complex tasks like creating an FAQ site for SOCS. We researched existing sites, compiled resources, and consulted with professors to ensure a comprehensive solution.",
+        "Regarding time management, I not only met deadlines but also focused on quality. I involved faculty members in reviewing our work, which led to valuable feedback and improvements, such as making our tutorials more user-friendly.",
+        "Lastly, I successfully worked on my intercultural competence. I developed strong relationships with my co-worker and supervisor, navigating minor conflicts through open communication and fostering a productive work environment.",
+        "The technologies I worked with, including GitLab and Microsoft Teams, along with web development skills, will be invaluable in my future work experiences. These tools are widely used in the industry, and my proficiency will be an asset. I also dabbled in a little bit of API testing towards the end of the work term, this is also something I would've preferred more time with in order to solidify my skills.",
+        "Reflecting on my goals, I'm satisfied with my progress in all areas. While I didn't have any unsuccessful goals, I identified areas for continuous improvement, such as further enhancing the user-friendliness of our deliverables based on feedback. This experience has provided me with a strong foundation in project management, communication, problem-solving, and teamwork, which will undoubtedly benefit me in my future professional endeavors."
+      ],
+
+      responsibilities: [
+        "Research institutional teaching policies - Conduct thorough research on institutional teaching policies and existing instructional informational resources.",
+        "Design a SharePoint repository - Design a user-friendly and accessible internal SharePoint repository for sharing teaching resources among course instructors in the School of Computer Science.",
+        "Consult with faculty and staff - Consult with faculty and teaching staff in the School of Computer Science to determine the informational resources needed.",
+        "Content Management - Gather, curate, and post content on the SharePoint site to ensure it is up-to-date and comprehensive."
+      ],
+
+      skills: [
+        "GitLab for project management",
+        "UI design and Figma",
+        "SharePoint development",
+        "Microsoft Teams",
+        "Web development",
+        "API testing (brief exposure)"
+      ],
+
+      conclusion: "In conclusion, my work term at the School of Computer Science has been an invaluable experience, marking significant growth in my professional skills and personal development. Through developing a SharePoint repository for teaching resources, I successfully met all my initial goals: improving communication, learning project management with GitLab, enhancing problem-solving skills, managing time effectively, and developing intercultural competence. This experience provided practical application of classroom knowledge and introduced me to new technologies like SharePoint, while reinforcing my proficiency in tools like Microsoft Teams and web development. The collaborative nature of the project, involving consultations with faculty and close teamwork, honed my ability to work effectively in a professional environment. While I achieved my objectives, this experience also highlighted areas for future growth, such as API testing. Overall, this work term has been a crucial stepping stone in my journey, equipping me with the tools, confidence, and insights needed to excel in my future career in the technology sector.",
+
+      acknowledgments: "I would also like to acknowledge the people who have aided my coworker and I through this work term, this includes Prof. Judi McCuaig, Prof. Stacey Scott, Kyle Johnston, Shamsi Shinin, and all those who helped in making this a successful and memorable moment."
+    },
+    'fif': {
+      introduction: "During my four-month co-op term at Fill it Forward, I worked as a software developer contributing to both web and mobile application development. This experience allowed me to work with an environmentally conscious technology company, develop technical skills, and create features used by thousands of users in production. Through this experience, I gained valuable insights into full-stack development while contributing to a platform that promotes sustainability and charitable giving.",
+      
+      employer: {
+        main: "Fill it Forward is an innovative company headquartered in Guelph, Ontario, that combines environmental sustainability with charitable giving through smart technology. The company specializes in creating environmentally friendly water bottles equipped with QR codes that integrate with their proprietary mobile application.",
+        tech: "The company's core technology stack includes React and React Native for front-end development, GraphQL for API interactions, Redis for caching, and TypeScript for type-safe development.",
+        facts: [
+          "Growing team of 27 employees",
+          "Integration allows users to track their reuse habits and measure environmental impact",
+          "Users can contribute to charitable causes with each scan",
+          "Technology and environmental consciousness intersection"
+        ]
+      },
+
+      goals: [
+        "Gain comprehensive knowledge of the existing codebase",
+        "Master the application's architecture and data flow patterns",
+        "Develop accurate project estimation skills",
+        "Meet development deadlines consistently",
+        "Enhance communication with the development team",
+        "Learn GraphQL for efficient API operations",
+        "Understand Redis caching mechanisms",
+        "Develop proficiency in React Native"
+      ],
+
+      goalAchievements: [
+        "Successfully achieved deep understanding of the codebase, enabling efficient feature development",
+        "Mastered key technologies including GraphQL and React Native",
+        "Contributed to production features used by thousands of users",
+        "Areas identified for improvement include oral communication skills, particularly in expressing technical ideas and concepts",
+        "Would benefit from more practice in presenting and discussing solutions with team members"
+      ],
+
+      responsibilities: [
+        "Full-stack development across both web and mobile platforms",
+        "Writing production-quality code for features used by thousands of users",
+        "Managing deployment processes and handling real-world application scaling",
+        "Implementing GraphQL APIs and Redis caching solutions",
+        "Contributing to both web and mobile application development"
+      ],
+
+      skills: [
+        "React & React Native",
+        "TypeScript",
+        "GraphQL",
+        "Redis",
+        "Production Deployment",
+        "Mobile Development",
+        "Full-stack Development"
+      ],
+
+      conclusion: "My work term at Fill it Forward provided comprehensive exposure to modern software development practices while contributing to environmental sustainability. The opportunity to create features that directly contributed to environmental awareness and charitable giving made this experience particularly meaningful. The combination of technical growth and positive social impact exemplifies the potential for technology to drive positive change.",
+
+      acknowledgments: "Special appreciation goes to David, Sid, and Marcos for their mentorship and guidance, the entire Fill it Forward team for creating an inclusive and supportive learning environment, and the company's commitment to both technological innovation and environmental sustainability."
+    }
+  }
+
+  const data = sections[id] || {}
+
+  return (
+    <div className="fixed inset-0 bg-background overflow-y-auto" style={{ top: 0 }}>
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
+        <div className="container max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 text-white hover:text-primary transition-colors"
+          >
+            <FaArrowLeft className="w-4 h-4" />
+            <span>Back to Home</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="container max-w-4xl mx-auto px-4 py-8 md:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="space-y-8 md:space-y-12"
+        >
+          {/* Hero Section */}
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden">
+              <img
+                src={experience.image}
+                alt={experience.company}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-2xl md:text-4xl font-bold text-white mb-2">
+                {experience.title}
+              </h1>
+              <p className="text-xl text-white/80 mb-2">
+                {experience.company}
+              </p>
+              <p className="text-lg text-white/60">
+                {experience.period}
+              </p>
+            </div>
+          </div>
+
+          {/* Introduction */}
+          {data.introduction && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FaGraduationCap className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">Introduction</h3>
+              </div>
+              <p className="text-white/80 text-base md:text-lg leading-relaxed">
+                {data.introduction}
+              </p>
+            </div>
+          )}
+
+          {/* Employer Information */}
+          {data.employer && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FaBuilding className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">About the Employer</h3>
+              </div>
+              <div className="space-y-4">
+                <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.employer.main}</p>
+                <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.employer.socs}</p>
+                <div className="mt-4">
+                  <h4 className="text-lg font-semibold text-white mb-3">Interesting Facts</h4>
+                  <ul className="space-y-3">
+                    {data.employer.facts.map((fact, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
+                        <span className="text-white/80 text-base md:text-lg">{fact}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tech Stack - Only for Fill it Forward */}
+          {id === 'fif' && data.employer?.tech && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FaTools className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">Tech Stack</h3>
+              </div>
+              <p className="text-white/80 text-base md:text-lg leading-relaxed">
+                {data.employer.tech}
+              </p>
+            </div>
+          )}
+
+          {/* Supervisor */}
+          {data.supervisor && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FaUserTie className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">About My Supervisor</h3>
+              </div>
+              <div className="space-y-4">
+                <div className="bg-white/5 rounded-lg p-4">
+                  <p className="text-white font-semibold mb-1">{data.supervisor.name}</p>
+                  <p className="text-white/80">{data.supervisor.role}</p>
+                  <p className="text-white/60 text-sm">{data.supervisor.background}</p>
+                </div>
+                {data.supervisor.details.map((detail, index) => (
+                  <p key={index} className="text-white/80 text-base md:text-lg leading-relaxed">{detail}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Goals */}
+          {data.goals && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FaTasks className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">Goals</h3>
+              </div>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {data.goals.map((goal, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
+                    <span className="text-white/80 text-base">{goal}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 space-y-4">
+                <h4 className="text-lg font-semibold text-white">Goal Achievements</h4>
+                {data.goalAchievements.map((achievement, index) => (
+                  <p key={index} className="text-white/80 text-base md:text-lg leading-relaxed">{achievement}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Responsibilities */}
+          {data.responsibilities && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FaUsers className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">Key Responsibilities</h3>
+              </div>
+              <ul className="space-y-3">
+                {data.responsibilities.map((resp, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
+                    <span className="text-white/80 text-base md:text-lg">{resp}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Skills */}
+          {data.skills && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <FaTools className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">Technologies & Skills</h3>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {data.skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-white/10 rounded-full text-white/80 text-base hover:bg-white/20 transition-colors"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Conclusion */}
+          {data.conclusion && (
+            <div className="space-y-4 border-t border-white/10 pt-8">
+              <h3 className="text-xl font-semibold text-white">Conclusion</h3>
+              <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.conclusion}</p>
+            </div>
+          )}
+
+          {/* Acknowledgments */}
+          {data.acknowledgments && (
+            <div className="space-y-4 border-t border-white/10 pt-8">
+              <div className="flex items-center gap-2">
+                <FaHandshake className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-white">Acknowledgments</h3>
+              </div>
+              <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.acknowledgments}</p>
+            </div>
+          )}
+        </motion.div>
+      </div>
+
+      {/* Background Elements */}
+      <div className="fixed top-[20%] left-[5%] w-[300px] h-[300px] bg-primary/30 blur-[100px] opacity-10 pointer-events-none -z-10" />
+      <div className="fixed bottom-[20%] right-[5%] w-[300px] h-[300px] bg-secondary/30 blur-[100px] opacity-10 pointer-events-none -z-10" />
+      
+      {/* Additional subtle gradients */}
+      <div className="fixed inset-0 bg-gradient-to-b from-background via-background to-background/50 pointer-events-none -z-20" />
+    </div>
+  )
+}
+
+export default ExperiencePage 

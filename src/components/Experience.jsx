@@ -1,14 +1,19 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FaBriefcase, FaUniversity } from 'react-icons/fa'
-import { useState } from 'react'
-import ExperienceModal from './ExperienceModal'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const TimelineCard = ({ title, company, period, description, icon: Icon, delay, image, isLeft, onClick }) => {
   const [ref, inView] = useInView({
     threshold: 0.3,
     triggerOnce: true,
   })
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    onClick()
+  }
 
   return (
     <motion.div
@@ -19,7 +24,7 @@ const TimelineCard = ({ title, company, period, description, icon: Icon, delay, 
       className={`flex w-full ${isLeft ? 'md:justify-start' : 'md:justify-end'} justify-center items-center`}
     >
       <div 
-        onClick={onClick}
+        onClick={handleClick}
         className={`glass p-4 md:p-6 rounded-lg hover:border-primary hover:scale-[1.02] transition-all duration-300 relative w-[90%] md:max-w-xl ${isLeft ? 'md:mr-8' : 'md:ml-8'} cursor-pointer group`}
       >
         <div className="flex flex-col md:flex-row items-start gap-4">
@@ -72,7 +77,17 @@ const Experience = () => {
     triggerOnce: true,
   })
 
-  const [selectedExperience, setSelectedExperience] = useState(null)
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  // Restore scroll position if coming back from experience page
+  useEffect(() => {
+    if (location.state?.scrollPosition) {
+      document.documentElement.style.scrollBehavior = 'auto'
+      window.scrollTo(0, location.state.scrollPosition)
+      document.documentElement.style.scrollBehavior = 'smooth'
+    }
+  }, [location])
 
   const experiences = [
     {
@@ -81,7 +96,7 @@ const Experience = () => {
       company: "University of Guelph",
       period: "June 2024 - August 2024",
       description: "Built an intranet for the School of Computer Science, focusing on creating a user-friendly and accessible internal SharePoint repository for sharing teaching resources among course instructors.",
-      icon: FaBriefcase,
+      iconType: 'briefcase',
       delay: 0.2,
       image: "/images/download.png",
       isLeft: true
@@ -92,7 +107,7 @@ const Experience = () => {
       company: "Fill it Forward",
       period: "September 2024 - December 2024",
       description: "Fullstack developer position, focusing on developing sustainable and eco-friendly solutions.",
-      icon: FaBriefcase,
+      iconType: 'briefcase',
       delay: 0.3,
       image: "/images/fillitforward.png",
       isLeft: false
@@ -103,7 +118,7 @@ const Experience = () => {
       company: "lernr.ai",
       period: "May 2024 - Present",
       description: "Working on an early stage startup that allows students to make notes, quizzes, and flashcards easily using AI. Building innovative solutions for education technology.",
-      icon: FaBriefcase,
+      iconType: 'briefcase',
       delay: 0.4,
       image: "/images/lernr logo.png",
       isLeft: true
@@ -114,12 +129,35 @@ const Experience = () => {
       company: "Buildspace",
       period: "June 2024",
       description: "Joined buildspace S5 to build lernr.ai. Collaborated with developers and received valuable feedback on product development.",
-      icon: FaUniversity,
+      iconType: 'university',
       delay: 0.5,
       image: "/images/buildpacelogo.jpeg",
       isLeft: false
     }
   ]
+
+  const getIconComponent = (iconType) => {
+    switch (iconType) {
+      case 'briefcase':
+        return FaBriefcase
+      case 'university':
+        return FaUniversity
+      default:
+        return FaBriefcase
+    }
+  }
+
+  const handleExperienceClick = (exp) => {
+    const { iconType, ...expWithoutIcon } = exp
+    const scrollPosition = window.scrollY
+    document.documentElement.style.scrollBehavior = 'auto'
+    navigate(`/experience/${exp.id}`, { 
+      state: { 
+        experience: expWithoutIcon,
+        scrollPosition 
+      } 
+    })
+  }
 
   return (
     <section id="experience" className="py-12 md:py-20 relative">
@@ -152,7 +190,8 @@ const Experience = () => {
               <TimelineCard
                 key={exp.id}
                 {...exp}
-                onClick={() => setSelectedExperience(exp)}
+                icon={getIconComponent(exp.iconType)}
+                onClick={() => handleExperienceClick(exp)}
               />
             ))}
           </div>
@@ -162,13 +201,6 @@ const Experience = () => {
       {/* Background Elements */}
       <div className="absolute top-[40%] left-[5%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-secondary blur-[100px] md:blur-[150px] opacity-15 -z-10" />
       <div className="absolute bottom-[10%] right-[5%] w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-primary blur-[100px] md:blur-[150px] opacity-15 -z-10" />
-
-      {/* Modal */}
-      <ExperienceModal
-        isOpen={!!selectedExperience}
-        onClose={() => setSelectedExperience(null)}
-        experience={selectedExperience}
-      />
     </section>
   )
 }
