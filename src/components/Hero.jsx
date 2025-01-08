@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei'
 import { FaGithub, FaLinkedinIn, FaTwitter } from 'react-icons/fa'
 
 const SocialLink = ({ href, icon: Icon, label }) => (
@@ -20,28 +18,19 @@ const SocialLink = ({ href, icon: Icon, label }) => (
 const Hero = () => {
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center py-16 md:py-0">
-      {/* Background Effects */}
-      <div className="absolute inset-0 -z-10">
-        <Canvas>
-          <OrbitControls enableZoom={false} />
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[3, 2, 1]} />
-          <Sphere args={[1, 100, 200]} scale={2.4}>
-            <MeshDistortMaterial
-              color="#00f6ff"
-              attach="material"
-              distort={0.5}
-              speed={2}
-              opacity={0.15}
-              transparent
-            />
-          </Sphere>
-        </Canvas>
-      </div>
-
-      {/* Additional Background Elements */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/30 rounded-full filter blur-[100px] animate-pulse -z-20" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-secondary/30 rounded-full filter blur-[100px] animate-pulse -z-20" />
+      {/* Background Elements */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.3 }}
+        className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/30 rounded-full filter blur-[100px] animate-pulse -z-20"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.4 }}
+        className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-secondary/30 rounded-full filter blur-[100px] animate-pulse -z-20"
+      />
 
       {/* Main Content */}
       <div className="container max-w-7xl mx-auto px-4 pt-16 md:pt-0 relative z-10">
