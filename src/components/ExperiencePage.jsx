@@ -1,17 +1,60 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { FaGraduationCap, FaUsers, FaTools, FaTasks, FaBuilding, FaUserTie, FaCheckCircle, FaHandshake, FaArrowLeft, FaBriefcase, FaUniversity } from 'react-icons/fa'
 
-const ExperiencePage = ({ experience }) => {
+const ExperiencePage = () => {
   const { id } = useParams()
+  const location = useLocation()
   const navigate = useNavigate()
+  
+  // Get experience data from state or find it in our data based on ID
+  const experiences = {
+    'uog': {
+      title: "Sharepoint Developer",
+      company: "University of Guelph",
+      period: "June 2024 - August 2024",
+      image: "/images/download.png",
+    },
+    'fif': {
+      title: "Fullstack Developer",
+      company: "Fill it Forward",
+      period: "September 2024 - December 2024",
+      image: "/images/fillitforward.png",
+    },
+    'lernr': {
+      title: "Founder",
+      company: "lernr.ai",
+      period: "May 2024 - Present",
+      image: "/images/lernr logo.png",
+    },
+    'buildspace': {
+      title: "Participant",
+      company: "Buildspace",
+      period: "June 2024",
+      image: "/images/buildpacelogo.jpeg",
+    }
+  }
+
+  const experience = location.state?.experience || experiences[id]
+  const scrollPosition = location.state?.scrollPosition || 0
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  if (!experience) {
+  useEffect(() => {
+    if (!experience && !experiences[id]) {
+      console.log('No experience data found, redirecting to home')
+      navigate('/')
+    }
+  }, [experience, id, navigate])
+
+  const handleBack = () => {
+    navigate('/', { state: { scrollPosition } })
+  }
+
+  if (!experience && !experiences[id]) {
     return null
   }
 
@@ -158,7 +201,7 @@ const ExperiencePage = ({ experience }) => {
       <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
         <div className="container max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <button
-            onClick={() => navigate('/')}
+            onClick={handleBack}
             className="flex items-center gap-2 text-white hover:text-primary transition-colors"
           >
             <FaArrowLeft className="w-4 h-4" />
