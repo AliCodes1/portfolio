@@ -11,7 +11,7 @@ const MainContent = () => {
   }, [])
 
   return (
-    <div className="relative z-10">
+    <div className="relative">
       <Navbar />
       <motion.main
         initial={{ opacity: 0 }}
@@ -34,9 +34,9 @@ const MainContent = () => {
 }
 
 const Root = () => (
-  <div className="relative min-h-screen overflow-hidden bg-background text-foreground selection:bg-primary/20 selection:text-primary">
+  <div className="relative bg-background text-foreground selection:bg-primary/20 selection:text-primary">
     {/* Background gradient */}
-    <div className="fixed inset-0 bg-gradient-radial from-background to-background/50 pointer-events-none" />
+    <div className="fixed inset-0 bg-gradient-radial from-background to-background/50 pointer-events-none -z-50" />
     <Outlet />
   </div>
 )

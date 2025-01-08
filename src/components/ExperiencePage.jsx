@@ -40,7 +40,9 @@ const ExperiencePage = () => {
   const scrollPosition = location.state?.scrollPosition || 0
 
   useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'auto'
     window.scrollTo(0, 0)
+    document.documentElement.style.scrollBehavior = 'smooth'
   }, [])
 
   useEffect(() => {
@@ -51,6 +53,7 @@ const ExperiencePage = () => {
   }, [experience, id, navigate])
 
   const handleBack = () => {
+    document.documentElement.style.scrollBehavior = 'auto'
     navigate('/', { state: { scrollPosition } })
   }
 
@@ -196,7 +199,7 @@ const ExperiencePage = () => {
   const data = sections[id] || {}
 
   return (
-    <div className="fixed inset-0 bg-background overflow-y-auto" style={{ top: 0 }}>
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
         <div className="container max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -211,187 +214,189 @@ const ExperiencePage = () => {
       </div>
 
       {/* Content */}
-      <div className="container max-w-4xl mx-auto px-4 py-8 md:py-12">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          className="space-y-8 md:space-y-12"
-        >
-          {/* Hero Section */}
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden">
-              <img
-                src={experience.image}
-                alt={experience.company}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-2xl md:text-4xl font-bold text-white mb-2">
-                {experience.title}
-              </h1>
-              <p className="text-xl text-white/80 mb-2">
-                {experience.company}
-              </p>
-              <p className="text-lg text-white/60">
-                {experience.period}
-              </p>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          {data.introduction && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FaGraduationCap className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">Introduction</h3>
+      <div className="relative">
+        <div className="container max-w-4xl mx-auto px-4 py-8 md:py-12">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-8 md:space-y-12"
+          >
+            {/* Hero Section */}
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden">
+                <img
+                  src={experience.image}
+                  alt={experience.company}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed">
-                {data.introduction}
-              </p>
-            </div>
-          )}
-
-          {/* Employer Information */}
-          {data.employer && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FaBuilding className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">About the Employer</h3>
+              <div className="flex-1 text-center md:text-left">
+                <h1 className="text-2xl md:text-4xl font-bold text-white mb-2">
+                  {experience.title}
+                </h1>
+                <p className="text-xl text-white/80 mb-2">
+                  {experience.company}
+                </p>
+                <p className="text-lg text-white/60">
+                  {experience.period}
+                </p>
               </div>
+            </div>
+
+            {/* Introduction */}
+            {data.introduction && (
               <div className="space-y-4">
-                <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.employer.main}</p>
-                <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.employer.socs}</p>
-                <div className="mt-4">
-                  <h4 className="text-lg font-semibold text-white mb-3">Interesting Facts</h4>
-                  <ul className="space-y-3">
-                    {data.employer.facts.map((fact, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
-                        <span className="text-white/80 text-base md:text-lg">{fact}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="flex items-center gap-2">
+                  <FaGraduationCap className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">Introduction</h3>
+                </div>
+                <p className="text-white/80 text-base md:text-lg leading-relaxed">
+                  {data.introduction}
+                </p>
+              </div>
+            )}
+
+            {/* Employer Information */}
+            {data.employer && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <FaBuilding className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">About the Employer</h3>
+                </div>
+                <div className="space-y-4">
+                  <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.employer.main}</p>
+                  <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.employer.socs}</p>
+                  <div className="mt-4">
+                    <h4 className="text-lg font-semibold text-white mb-3">Interesting Facts</h4>
+                    <ul className="space-y-3">
+                      {data.employer.facts.map((fact, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
+                          <span className="text-white/80 text-base md:text-lg">{fact}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Tech Stack - Only for Fill it Forward */}
-          {id === 'fif' && data.employer?.tech && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FaTools className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">Tech Stack</h3>
-              </div>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed">
-                {data.employer.tech}
-              </p>
-            </div>
-          )}
-
-          {/* Supervisor */}
-          {data.supervisor && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FaUserTie className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">About My Supervisor</h3>
-              </div>
+            {/* Tech Stack - Only for Fill it Forward */}
+            {id === 'fif' && data.employer?.tech && (
               <div className="space-y-4">
-                <div className="bg-white/5 rounded-lg p-4">
-                  <p className="text-white font-semibold mb-1">{data.supervisor.name}</p>
-                  <p className="text-white/80">{data.supervisor.role}</p>
-                  <p className="text-white/60 text-sm">{data.supervisor.background}</p>
+                <div className="flex items-center gap-2">
+                  <FaTools className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">Tech Stack</h3>
                 </div>
-                {data.supervisor.details.map((detail, index) => (
-                  <p key={index} className="text-white/80 text-base md:text-lg leading-relaxed">{detail}</p>
-                ))}
+                <p className="text-white/80 text-base md:text-lg leading-relaxed">
+                  {data.employer.tech}
+                </p>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Goals */}
-          {data.goals && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FaTasks className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">Goals</h3>
+            {/* Supervisor */}
+            {data.supervisor && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <FaUserTie className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">About My Supervisor</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <p className="text-white font-semibold mb-1">{data.supervisor.name}</p>
+                    <p className="text-white/80">{data.supervisor.role}</p>
+                    <p className="text-white/60 text-sm">{data.supervisor.background}</p>
+                  </div>
+                  {data.supervisor.details.map((detail, index) => (
+                    <p key={index} className="text-white/80 text-base md:text-lg leading-relaxed">{detail}</p>
+                  ))}
+                </div>
               </div>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {data.goals.map((goal, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
-                    <span className="text-white/80 text-base">{goal}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 space-y-4">
-                <h4 className="text-lg font-semibold text-white">Goal Achievements</h4>
-                {data.goalAchievements.map((achievement, index) => (
-                  <p key={index} className="text-white/80 text-base md:text-lg leading-relaxed">{achievement}</p>
-                ))}
-              </div>
-            </div>
-          )}
+            )}
 
-          {/* Responsibilities */}
-          {data.responsibilities && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FaUsers className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">Key Responsibilities</h3>
+            {/* Goals */}
+            {data.goals && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <FaTasks className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">Goals</h3>
+                </div>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {data.goals.map((goal, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
+                      <span className="text-white/80 text-base">{goal}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 space-y-4">
+                  <h4 className="text-lg font-semibold text-white">Goal Achievements</h4>
+                  {data.goalAchievements.map((achievement, index) => (
+                    <p key={index} className="text-white/80 text-base md:text-lg leading-relaxed">{achievement}</p>
+                  ))}
+                </div>
               </div>
-              <ul className="space-y-3">
-                {data.responsibilities.map((resp, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
-                    <span className="text-white/80 text-base md:text-lg">{resp}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+            )}
 
-          {/* Skills */}
-          {data.skills && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <FaTools className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">Technologies & Skills</h3>
+            {/* Responsibilities */}
+            {data.responsibilities && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <FaUsers className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">Key Responsibilities</h3>
+                </div>
+                <ul className="space-y-3">
+                  {data.responsibilities.map((resp, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <FaCheckCircle className="w-5 h-5 text-primary mt-1" />
+                      <span className="text-white/80 text-base md:text-lg">{resp}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="flex flex-wrap gap-3">
-                {data.skills.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-2 bg-white/10 rounded-full text-white/80 text-base hover:bg-white/20 transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+            )}
 
-          {/* Conclusion */}
-          {data.conclusion && (
-            <div className="space-y-4 border-t border-white/10 pt-8">
-              <h3 className="text-xl font-semibold text-white">Conclusion</h3>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.conclusion}</p>
-            </div>
-          )}
-
-          {/* Acknowledgments */}
-          {data.acknowledgments && (
-            <div className="space-y-4 border-t border-white/10 pt-8">
-              <div className="flex items-center gap-2">
-                <FaHandshake className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold text-white">Acknowledgments</h3>
+            {/* Skills */}
+            {data.skills && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <FaTools className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">Technologies & Skills</h3>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {data.skills.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="px-4 py-2 bg-white/10 rounded-full text-white/80 text-base hover:bg-white/20 transition-colors"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.acknowledgments}</p>
-            </div>
-          )}
-        </motion.div>
+            )}
+
+            {/* Conclusion */}
+            {data.conclusion && (
+              <div className="space-y-4 border-t border-white/10 pt-8">
+                <h3 className="text-xl font-semibold text-white">Conclusion</h3>
+                <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.conclusion}</p>
+              </div>
+            )}
+
+            {/* Acknowledgments */}
+            {data.acknowledgments && (
+              <div className="space-y-4 border-t border-white/10 pt-8">
+                <div className="flex items-center gap-2">
+                  <FaHandshake className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-white">Acknowledgments</h3>
+                </div>
+                <p className="text-white/80 text-base md:text-lg leading-relaxed">{data.acknowledgments}</p>
+              </div>
+            )}
+          </motion.div>
+        </div>
       </div>
 
       {/* Background Elements */}
