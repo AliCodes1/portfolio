@@ -1,30 +1,15 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { FaGraduationCap, FaUsers, FaTools, FaTasks, FaBuilding, FaUserTie, FaCheckCircle, FaHandshake, FaArrowLeft, FaBriefcase, FaUniversity } from 'react-icons/fa'
 
-const ExperiencePage = () => {
+const ExperiencePage = ({ experience }) => {
   const { id } = useParams()
-  const location = useLocation()
   const navigate = useNavigate()
-  const experience = location.state?.experience
-  const scrollPosition = location.state?.scrollPosition
 
   useEffect(() => {
-    // Set scroll to top when component mounts
     window.scrollTo(0, 0)
   }, [])
-
-  useEffect(() => {
-    if (!experience) {
-      console.log('No experience data found, redirecting to home')
-      navigate('/')
-    }
-  }, [experience, navigate])
-
-  const handleBack = () => {
-    navigate('/', { state: { scrollPosition } })
-  }
 
   if (!experience) {
     return null
@@ -173,7 +158,7 @@ const ExperiencePage = () => {
       <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
         <div className="container max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <button
-            onClick={handleBack}
+            onClick={() => navigate('/')}
             className="flex items-center gap-2 text-white hover:text-primary transition-colors"
           >
             <FaArrowLeft className="w-4 h-4" />

@@ -1,12 +1,11 @@
 import { motion } from 'framer-motion'
-import { createHashRouter, RouterProvider, Outlet } from 'react-router-dom'
+import { createHashRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { Hero, About, Experience, Skills, Contact, Navbar } from './components'
 import ExperiencePage from './components/ExperiencePage'
 
 const MainContent = () => {
   useEffect(() => {
-    // Reset scroll position when MainContent mounts
     window.scrollTo(0, 0)
   }, [])
 
@@ -41,6 +40,54 @@ const Root = () => (
   </div>
 )
 
+// Experience data for direct URL access
+const experienceData = {
+  'uog': {
+    id: 'uog',
+    title: "Sharepoint Developer",
+    company: "University of Guelph",
+    period: "June 2024 - August 2024",
+    description: "Built an intranet for the School of Computer Science, focusing on creating a user-friendly and accessible internal SharePoint repository for sharing teaching resources among course instructors.",
+    image: "/images/download.png",
+  },
+  'fif': {
+    id: 'fif',
+    title: "Fullstack Developer",
+    company: "Fill it Forward",
+    period: "September 2024 - December 2024",
+    description: "Fullstack developer position, focusing on developing sustainable and eco-friendly solutions.",
+    image: "/images/fillitforward.png",
+  },
+  'lernr': {
+    id: 'lernr',
+    title: "Founder",
+    company: "lernr.ai",
+    period: "May 2024 - Present",
+    description: "Working on an early stage startup that allows students to make notes, quizzes, and flashcards easily using AI. Building innovative solutions for education technology.",
+    image: "/images/lernr logo.png",
+  },
+  'buildspace': {
+    id: 'buildspace',
+    title: "Participant",
+    company: "Buildspace",
+    period: "June 2024",
+    description: "Joined buildspace S5 to build lernr.ai. Collaborated with developers and received valuable feedback on product development.",
+    image: "/images/buildpacelogo.jpeg",
+  }
+}
+
+const ExperienceWrapper = () => {
+  const { id } = useParams()
+  
+  // If experience doesn't exist, redirect to home
+  if (!experienceData[id]) {
+    return <Navigate to="/" replace />
+  }
+
+  // Pass the experience data directly
+  return <ExperiencePage experience={experienceData[id]} />
+}
+
 const router = createHashRouter([
   {
     path: "/",
@@ -52,7 +99,7 @@ const router = createHashRouter([
       },
       {
         path: "experience/:id",
-        element: <ExperiencePage />,
+        element: <ExperienceWrapper />,
       },
     ],
   },
