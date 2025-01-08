@@ -130,7 +130,7 @@ const Hero = () => {
               {/* Profile Picture */}
               <div className="absolute inset-[10%] rounded-full overflow-hidden bg-gradient-to-b from-primary/20 to-transparent backdrop-blur-sm">
                 <img
-                  src="../public/images/pfp.png"
+                  src="/images/pfp.png"
                   alt="Muhammad Ali"
                   className="w-full h-full object-cover object-center rounded-full p-2"
                 />
