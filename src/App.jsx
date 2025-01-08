@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
+import { createHashRouter, RouterProvider, Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
 import { Hero, About, Experience, Skills, Contact, Navbar } from './components'
 import ExperiencePage from './components/ExperiencePage'
@@ -41,7 +41,7 @@ const Root = () => (
   </div>
 )
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Root />,
