@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
-import { FaGraduationCap, FaUsers, FaTools, FaTasks, FaBuilding, FaUserTie, FaCheckCircle, FaHandshake, FaArrowLeft, FaBriefcase, FaUniversity } from 'react-icons/fa'
+import { FaGraduationCap, FaUsers, FaTools, FaTasks, FaBuilding, FaUserTie, FaCheckCircle, FaHandshake, FaArrowLeft } from 'react-icons/fa'
 
 const ExperiencePage = () => {
   const { id } = useParams()
@@ -9,7 +9,13 @@ const ExperiencePage = () => {
   const navigate = useNavigate()
   
   // Get experience data from state or find it in our data based on ID
-  const experiences = {
+  const experiences = useMemo(() => ({
+    'cognizant': {
+      title: "Software Engineering Co-op",
+      company: "Cognizant",
+      period: "Summer 2025",
+      image: "/images/cognizant-logo.jpeg",
+    },
     'uog': {
       title: "Sharepoint Developer",
       company: "University of Guelph",
@@ -34,7 +40,7 @@ const ExperiencePage = () => {
       period: "June 2024",
       image: "/images/buildpacelogo.jpeg",
     }
-  }
+  }), [])
 
   const experience = location.state?.experience || experiences[id]
   const scrollPosition = location.state?.scrollPosition || 0
@@ -50,7 +56,7 @@ const ExperiencePage = () => {
       console.log('No experience data found, redirecting to home')
       navigate('/')
     }
-  }, [experience, id, navigate])
+  }, [experience, id, navigate, experiences])
 
   const handleBack = () => {
     document.documentElement.style.scrollBehavior = 'auto'
@@ -61,22 +67,78 @@ const ExperiencePage = () => {
     return null
   }
 
-  const getIcon = (id) => {
-    switch (id) {
-      case 'uog':
-      case 'fif':
-      case 'lernr':
-        return FaBriefcase
-      case 'buildspace':
-        return FaUniversity
-      default:
-        return FaBriefcase
-    }
-  }
 
-  const Icon = getIcon(id)
 
   const sections = {
+    'cognizant': {
+      introduction: "During the summer of 2025, I joined Cognizant as a Software Engineering Co-op. My primary project involved developing a production-ready application for a Fortune 500 client. This experience gave me the opportunity to contribute directly to a real-world project rather than working on a mock or internal training task. In this report, I will reflect on my responsibilities, the skills I developed, and the overall work environment at Cognizant. My goal is to provide insight into how this role helped me grow both technically and professionally.",
+      
+      employer: {
+        main: "Cognizant is a leading multinational professional services company that provides consulting, information technology, and business process outsourcing. Founded in 1994 and headquartered in Teaneck, New Jersey, Cognizant has grown into one of the largest IT services firms in the world, employing more than 350,000 people across 40+ countries.",
+        tech: "The company focuses on digital innovation, helping clients transform their businesses through artificial intelligence, data analytics, cloud computing, cybersecurity, software engineering, and digital transformation. Cognizant's teams assist organizations with modernizing IT systems, migrating to the cloud, building secure platforms, and implementing data-driven strategies.",
+        facts: [
+          "Originally founded as the technology arm of Dun & Bradstreet before becoming independent",
+          "Operates large delivery centers in India (Chennai, Bengaluru, Hyderabad, Pune, etc.), making India central to its global operations",
+          "Frequently listed among the top IT service providers worldwide and recognized for digital innovation and sustainability",
+          "Clients span across healthcare, finance, retail, and manufacturing industries",
+          "Strong focus on next-generation technologies such as machine learning, Internet of Things (IoT), blockchain, and cloud-native applications"
+        ]
+      },
+
+      supervisor: {
+        name: "Saktikrishna",
+        role: "Project Supervisor",
+        background: "Oversaw the project and ensured alignment with client needs",
+        details: [
+          "Saktikrishna served as my supervisor during the co-op, providing project oversight and ensuring our development work stayed aligned with client requirements and business objectives.",
+          "Under his guidance, our team successfully delivered a production-ready application that met all specified requirements and quality standards.",
+          "His leadership style emphasized both technical excellence and professional development, creating an environment where interns could learn while contributing meaningfully to client projects."
+        ]
+      },
+
+      goals: [
+        "Expand knowledge of Artificial Intelligence (AI) and its practical applications",
+        "Learn to plan and run sprints effectively, improving understanding of Agile project management",
+        "Deepen knowledge of AWS infrastructure, with a focus on serverless architecture",
+        "Improve communication skills with teammates, mentors, and stakeholders"
+      ],
+
+      goalAchievements: [
+        "Successfully expanded knowledge of AWS, especially serverless services such as Lambda, DynamoDB, and SQS. This was a major milestone, since cloud skills are in high demand across the industry.",
+        "Learned to work within Agile sprint cycles, including backlog grooming, sprint planning, and retrospectives, which gave practical experience in project management.",
+        "While gained exposure to AI services such as Bedrock, this is an area where I can still continue to grow.",
+        "Improved communication skills significantly, but also realized that effective stakeholder communication requires ongoing practice,especially when explaining technical details to non-technical audiences.",
+        "Mentorship played a huge role in helping achieve these goals. Cognizant provided access to Udemy courses, training resources, and consistent feedback from mentors, which accelerated learning."
+      ],
+
+      responsibilities: [
+        "Frontend development using React.js for building responsive and dynamic user interfaces",
+        "Backend development with AWS serverless architecture, leveraging Lambda for event-driven logic",
+        "Database management using DynamoDB & RDS for scalable data storage solutions",
+        "Implementing asynchronous messaging with SQS (Simple Queue Service)",
+        "AI integration using AWS Bedrock for enhanced application functionality",
+        "Version control and collaboration using Git and Agile sprint workflows with excel",
+        "Meeting actual business requirements and complying with strict quality standards for real client deployment"
+      ],
+
+      skills: [
+        "React.js",
+        "AWS Lambda",
+        "DynamoDB",
+        "RDS",
+        "SQS (Simple Queue Service)",
+        "AWS Bedrock",
+        "Git",
+        "Jira",
+        "Agile Methodology",
+        "Serverless Architecture",
+        "Full-stack Development"
+      ],
+
+      conclusion: "Overall, this co-op was an invaluable learning-by-doing experience. I gained technical expertise in AWS infrastructure and full-stack development while also strengthening my teamwork, problem-solving, and communication skills. The combination of mentorship, hands-on development, and real client impact made this work term stand out. If I had to summarize my experience, I would say it was defined by constant learning, adaptation, and collaboration. I made mistakes, learned from them, and applied those lessons to improve, which is the essence of professional growth.",
+
+      acknowledgments: "I would like to thank my teammates (4 developers) and the 10 fellow interns, who made the collaborative experience enjoyable. My supervisor, Saktikrishna, for overseeing the project and ensuring we stayed aligned with client needs. My mentor, Ebenezer, for providing technical and professional guidance that accelerated my learning."
+    },
     'uog': {
       introduction: "Hey, this was my first work term. As of S24 I was employed at the University of Guelph as a Sharepoint developer and worked under Judi McCuaig. I will now use this opportunity to explain what I had done in this period and other facts about the workplace and the work itself.",
       
@@ -224,11 +286,16 @@ const ExperiencePage = () => {
           >
             {/* Hero Section */}
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden bg-white/10">
                 <img
                   src={experience.image}
                   alt={experience.company}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    console.error('Image failed to load:', experience.image);
+                    e.target.style.display = 'none';
+                  }}
+                  onLoad={() => console.log('Image loaded successfully:', experience.image)}
                 />
               </div>
               <div className="flex-1 text-center md:text-left">
@@ -282,8 +349,8 @@ const ExperiencePage = () => {
               </div>
             )}
 
-            {/* Tech Stack - Only for Fill it Forward */}
-            {id === 'fif' && data.employer?.tech && (
+            {/* Tech Stack - For Fill it Forward and Cognizant */}
+            {(id === 'fif' || id === 'cognizant') && data.employer?.tech && (
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <FaTools className="w-6 h-6 text-primary" />
