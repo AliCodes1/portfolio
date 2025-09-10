@@ -129,7 +129,6 @@ const ExperiencePage = () => {
         "SQS (Simple Queue Service)",
         "AWS Bedrock",
         "Git",
-        "Jira",
         "Agile Methodology",
         "Serverless Architecture",
         "Full-stack Development"
